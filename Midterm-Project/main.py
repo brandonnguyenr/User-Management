@@ -9,8 +9,8 @@ app.secret_key = 'apple'
 
 # Configuration for MySQL connection
 app.config['MYSQL_HOST'] = 'localhost'
-app.config['MYSQL_USER'] = 'brandondb'
-app.config['MYSQL_PASSWORD'] = '123456'
+app.config['MYSQL_USER'] = ''
+app.config['MYSQL_PASSWORD'] = ''
 app.config['MYSQL_DB'] = 'user_management_system'
 
 # Create a MySQL instance to connect to the database

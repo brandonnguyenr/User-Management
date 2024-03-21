@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BLOCK DESTROYER</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            display: flex;
+            justify-content: center; 
+            align-items: center; 
+        }
+
+        #board {
+            width: 400px;
+            height: 400px;
+            background-color: #f0f0f0;
+            position: relative;
+            margin-top: 50px;
+        }
+
+        #character {
+            width: 20px;
+            height: 20px;
+            background-color: #ff0000;
+            position: absolute;
+            top: 0;
+            left: 0;
+            transition: all 0.3s ease;
+            z-index: 2;
+        }
+
+        .yellow-box {
+            width: 20px;
+            height: 20px;
+            background-color: yellow;
+            position: absolute;
+            z-index: 1;
+        }
+
+        #score {
+            position: fixed;
+            bottom: 500px;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            font-size: 24px;
+            font-family: 'Press Start 2P';
+        }
+
+        #instruction-box {
+            width: 300px; 
+            height: 200px;
+            background-color: #e0e0e0;
+            position: absolute;
+            top: 50%; 
+            transform: translateY(-155%);
+            left: calc(50% - 550px); 
+        }
+
+        #instruction {
+            margin-left: 25px;
+            margin-top: 25px;
+        }
+
+        #welcome {
+            position: absolute;
+            top: 20px;
+            left: 20px; 
+            font-size: 30px; 
+            z-index: 3; 
+            font-family:'Times New Roman', Times, serif;
+        }
+
+        #account-settings-button {
+            position: absolute;
+            left: 5%;
+            top: 10%;
+            transform: translate(-50%, -50%);
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        #products-button {
+            position: absolute;
+            left: 4.25%;
+            top: 15%;
+            transform: translate(-50%, -50%);
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div id="welcome">Welcome, <span id="username" style="color: blue;">{{ username }}</span></div>
+
+    <!-- Account Settings button -->
+    <button id="account-settings-button" onclick="redirectToAccountSettings()">Account Settings</button>
+
+    <!-- Products button-->
+    <button id="products-button" onclick="redirectToProducts()">Our Products</button>
+
+    <div id="instruction-box">
+        <h2 style="margin-left: 10px;">How To Play</h2>
+        <p id="instruction"> 
+            Right Arrow Key (→): Move right<br>
+            Left Arrow Key (←): Move left<br>
+            Down Arrow Key (↓): Move down<br>
+            Up Arrow Key (↑): Move up<br>
+        </p>
+    </div>
+
+    <div id="board">
+        <div id="character"></div>
+    </div>
+    <div id="score">Score: <span id="score-value">0</span></div>
+
+    <script>
+        let characterPosition = { x: 0, y: 0 };
+        let score = 0;
+        const character = document.getElementById('character');
+        const board = document.getElementById('board');
+        const scoreSpan = document.getElementById('score-value');
+        const tileSize = 20;
+
+        function createYellowBox() {
+            const yellowBox = document.createElement('div');
+            yellowBox.classList.add('yellow-box');
+            yellowBox.style.left = Math.floor(Math.random() * (board.offsetWidth / tileSize)) * tileSize + 'px';
+            yellowBox.style.top = Math.floor(Math.random() * (board.offsetHeight / tileSize)) * tileSize + 'px';
+            board.appendChild(yellowBox);
+            yellowBox.addEventListener('click', () => {
+                score += 100;
+                scoreSpan.textContent = score;
+                board.removeChild(yellowBox);
+                createYellowBox();
+            });
+        }
+
+        function checkCollision() {
+            const characterRect = character.getBoundingClientRect();
+            const yellowBoxes = document.querySelectorAll('.yellow-box');
+            
+            yellowBoxes.forEach((yellowBox) => {
+                const yellowBoxRect = yellowBox.getBoundingClientRect();
+                if (characterRect.left < yellowBoxRect.right &&
+                    characterRect.right > yellowBoxRect.left &&
+                    characterRect.top < yellowBoxRect.bottom &&
+                    characterRect.bottom > yellowBoxRect.top) {
+                        score += 100;
+                        scoreSpan.textContent = score;
+                        board.removeChild(yellowBox);
+                        createYellowBox();
+                }
+            });
+        }
+
+        document.addEventListener('keydown', (event) => {
+            const boardRect = board.getBoundingClientRect();
+
+            switch(event.key) {
+                case 'ArrowUp':
+                    if (characterPosition.y > 0) {
+                        characterPosition.y -= tileSize;
+                    }
+                    break;
+                case 'ArrowDown':
+                    if (characterPosition.y + tileSize < boardRect.height) {
+                        characterPosition.y += tileSize;
+                    }
+                    break;
+                case 'ArrowLeft':
+                    if (characterPosition.x > 0) {
+                        characterPosition.x -= tileSize;
+                    }
+                    break;
+                case 'ArrowRight':
+                    if (characterPosition.x + tileSize < boardRect.width) {
+                        characterPosition.x += tileSize;
+                    }
+                    break;
+            }
+
+            character.style.left = characterPosition.x + 'px';
+            character.style.top = characterPosition.y + 'px';
+
+            checkCollision();
+        });
+
+        createYellowBox();
+
+        // Function to redirect to account settings page
+        function redirectToAccountSettings() {
+            // Replace 'account' with the actual route for the account settings page
+            window.location.href = "{{ url_for('account', username=username) }}";
+        }
+
+        function redirectToProducts() {
+            // Replace 'account' with the actual route for the account settings page
+            window.location.href = "{{ url_for('product', username=username) }}";
+        }
+    </script>
+</body>
+</html>

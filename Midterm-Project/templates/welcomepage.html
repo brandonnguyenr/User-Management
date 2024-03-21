@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        /* Style for forms */
+        form {
+            display: inline-block;
+            margin-right: 10px; /* Adjust as needed */
+        }
+    </style>
+</head>
+<body>
+    <h1><div id="welcome">Welcome, <span id="username" style="color: blue;">{{ username }}</span></div></h1>
+
+    <!-- Logout Button and Delete Account Button side by side -->
+    <form action="{{ url_for('logout') }}" method="POST">
+        <button type="submit">Logout</button>
+    </form>
+    
+    <form action="/delete_account/{{ username }}" method="POST">
+        <button type="submit">Delete Account</button>
+    </form>
+
+    <!-- Update Password Form -->
+    <h2>Update Password</h2>
+    <form action="/update_password/{{ username }}" method="POST">
+        <label for="new_password">New Password:</label>
+        <input type="password" id="new_password" name="new_password" required>
+        <button type="submit">Update Password</button>
+    </form>
+
+    <!-- Update Username Form -->
+    <h2>Update Username</h2>
+    <form action="/update_username/{{ username }}" method="POST">
+        <label for="new_username">New Username:</label>
+        <input type="text" id="new_username" name="new_username" required>
+        <button type="submit">Update Username</button>
+    </form>
+</body>
+</html>
+

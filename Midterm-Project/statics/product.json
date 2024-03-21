@@ -1,0 +1,22 @@
+[
+    {
+        "name": "Porche 911 GT3 RS",
+        "price": 241300,
+        "formatted_price": "241,300",
+        "image": "https://newsroom.porsche.com/.imaging/mte/porsche-templating-theme/image_1290x726/dam/pnr/2022/Products/911-GT3-RS/S22_3365_fine.jpeg/jcr:content/S22_3365_fine.jpeg"
+    },
+
+    {
+        "name": "Porche 911 S/T",
+        "price": 290000,
+        "formatted_price": "290,000",
+        "image": "https://s.aolcdn.com/images/dims3/GLOB/legacy_thumbnail/1062x597/format/jpg/quality/100/https://s.aolcdn.com/os/ab/_cms/2023/12/13131016/Porsche-911-ST-in-Shore-Blue-action-front-profile.jpg"
+    },
+
+    {
+        "name": "1994 Porche 911 Turbo",
+        "price": 101200,
+        "formatted_price": "101,200",
+        "image": "https://news.dupontregistry.com/wp-content/uploads/2022/11/1994-Porsche-Turbo-S-Package-1310278_.jpg"
+    }
+]

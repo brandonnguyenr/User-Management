@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>E-commerce Store</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .header {
+            text-align: center;
+            background-color: #007bff;
+            color: #ffffff;
+            padding: 20px 0;
+        }
+        .header h1 {
+            margin: 0;
+        }
+        .buttons button {
+            padding: 10px 20px;
+            margin: 10px;
+            cursor: pointer;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .buttons button:hover {
+            background-color: #218838;
+        }
+        .product-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            padding: 20px;
+        }
+        .product-card {
+            border: 1px solid #ddd;
+            padding: 20px;
+            border-radius: 8px;
+            width: 200px;
+            background-color: white;
+            margin: 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .product-card img {
+            width: 100%;
+            height: auto;
+            border-radius: 4px;
+            margin-bottom: 15px;
+        }
+        .product-card h2 {
+            font-size: 18px;
+            color: #333;
+            margin: 0;
+        }
+        .product-card p {
+            color: #555;
+            margin: 5px 0 15px;
+            font-size: 16px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>E-commerce Store</h1>
+    </div>
+    <div class="buttons">
+        <button onclick="goBack()">Back</button>
+    </div>
+    <h2 style="text-align:center; color:#333;">Our Products</h2>
+    <div class="product-container">
+        {% for product in products %}
+            <div class="product-card">
+                <img src="{{ product['image'] }}" alt="{{ product['name'] }}">
+                <h2>{{ product['name'] }}</h2>
+                <p>${{ product['formatted_price'] }}</p>
+            </div>
+        {% endfor %}
+    </div>
+    
+
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+</body>
+</html>
+
